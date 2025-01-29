@@ -1,27 +1,46 @@
 <template>
-  <v-container class="race-container">
-    <!-- 馬の表示 -->
-    <v-row v-for="horse in horses" :key="horse.id" class="horse-row">
-      <v-img
-        :src="horse.image"
-        class="horse"
-        :style="{ transform: `translateX(${horse.position}px)` }"
-      />
-    </v-row>
+  <v-app id="inspire">
+    <v-app-bar app color="white" flat>
+      <v-container class="py-0 fill-height">
+        OHAMACHIKO Kasakasa Derby
+      </v-container>
 
-    <!-- ゴールライン -->
-    <div class="goal-line"></div>
+      <!-- レース開始ボタン -->
+      <v-btn v-if="!raceFinished" @click="startRace" :disabled="raceInProgress">
+        Start Race
+      </v-btn>
 
-    <!-- レース開始ボタン -->
-    <v-btn class="start-button" @click="startRace" :disabled="raceInProgress">
-      Start Race
-    </v-btn>
+      <!-- リセットボタン -->
+      <v-btn v-if="raceFinished" @click="resetRace">
+        Reset Race
+      </v-btn>
+    </v-app-bar>
 
-    <!-- 結果表示 -->
-    <v-alert v-if="raceFinished" type="success" class="result-alert">
-      🏆 優勝: {{ rankings[0]?.name }} 🎉
-    </v-alert>
-  </v-container>
+    <v-main class="bg-green-lighten-3">
+      <v-container>
+        <v-container class="border rounded-lg bg-green">
+          <!-- 馬の表示 -->
+          <v-row v-for="horse in horses" :key="horse.id">
+            <v-col cols="2">
+              <div class="horse-name">{{ horse.name }}</div>
+            </v-col>
+            <v-col>
+              <v-img
+                :src="horse.image"
+                class="horse"
+                :style="{ left: `${horse.position/5}%`, transform: `translateX(-50%)` }"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- 結果表示 -->
+          <v-alert v-if="raceFinished" type="success" class="result-alert">
+            🏆 優勝: {{ rankings[0]?.name }} 🎉
+          </v-alert>
+        </v-container>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -44,6 +63,8 @@ const horses = ref<Horse[]>([
   { id: 1, name: 'サクラ', image: '/horse1.png', position: 0, finished: false },
   { id: 2, name: 'ウィニング', image: '/horse2.png', position: 0, finished: false },
   { id: 3, name: 'スペシャル', image: '/horse3.png', position: 0, finished: false },
+  { id: 4, name: 'ブレッド', image: '/horse4.png', position: 0, finished: false },
+  { id: 5, name: 'ジェントル', image: '/horse5.png', position: 0, finished: false },
 ]);
 
 const startRace = () => {
@@ -80,22 +101,25 @@ const startRace = () => {
     }
   }, 100);
 };
+
+const resetRace = () => {
+  raceFinished.value = false;
+  rankings.value = [];
+  horses.value.forEach((horse) => {
+    horse.position = 0;
+    horse.finished = false;
+  });
+};
 </script>
 
 <style scoped>
 .race-container {
   position: relative;
-  width: 600px;
+  max-width: 1200px;
   height: 300px;
   border: 2px solid black;
   overflow: hidden;
   background-color: green;
-}
-
-.horse-row {
-  position: relative;
-  height: 60px;
-  width: 60px;
 }
 
 .horse {
@@ -111,14 +135,6 @@ const startRace = () => {
   width: 5px;
   height: 100%;
   background-color: red;
-}
-
-/* レース開始ボタン */
-.start-button {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 /* 結果表示 */
