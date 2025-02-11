@@ -5,29 +5,29 @@
         OHAMACHIKO Kasakasa Derby
       </v-container>
 
-      <v-btn v-if="!raceFinished" @click="startRace" :disabled="raceInProgress">
-        Start Race
-      </v-btn>
+      <v-btn v-if="!raceFinished" @click="startRace" :disabled="raceInProgress"> Start Race </v-btn>
 
-      <v-btn v-if="raceFinished" @click="resetRace">
-        Reset Race
-      </v-btn>
+      <v-btn v-if="raceFinished" @click="resetRace"> Reset Race </v-btn>
     </v-app-bar>
 
     <v-main class="bg-green-lighten-3">
       <v-container>
-        <v-container class="border rounded-lg bg-green position-relative">
+        <v-container class="rounded-lg bg-green position-relative">
           <div class="goal-line"></div>
           <v-row v-for="horse in horses" :key="horse.id">
             <v-col cols="2">
               <div class="horse-name">{{ horse.name }}</div>
               <div>{{ (horse.position / 5).toFixed(1) }}%</div>
+              <div>{{ horse.isFallen }}</div>
             </v-col>
             <v-col>
               <v-img
                 :src="horse.image"
                 class="horse"
-                :style="{ left: `${horse.position/5}%`, transform: `translateX(-${horse.position/5}%)` }"
+                :style="{
+                  left: `${horse.position / 5}%`,
+                  transform: `translateX(-${horse.position / 5}%) rotate(${horse.isFallen ? '90' : '0'}deg)`,
+                }"
               />
             </v-col>
           </v-row>
@@ -41,101 +41,159 @@
   </v-app>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
 interface Horse {
-  id: number;
-  name: string;
-  image: string;
-  position: number;
-  finished: boolean;
+  id: number
+  name: string
+  image: string
+  position: number
+  isFallen: boolean
+  fallCooldown: boolean
+  finished: boolean
 }
 
-const goalPosition = 500; // ゴールラインの位置
-const raceInProgress = ref(false);
-const raceFinished = ref(false);
-const rankings = ref<Horse[]>([]);
+export default defineComponent({
+  setup() {
+    const rankings = ref<Horse[]>([])
+    const horses = ref<Horse[]>([
+      {
+        id: 1,
+        name: 'ダンゴムシチャウヨ',
+        image: '/horse1.png',
+        position: 0,
+        isFallen: false,
+        fallCooldown: false,
+        finished: false,
+      },
+      {
+        id: 2,
+        name: 'ウマウマチャハーン',
+        image: '/horse2.png',
+        position: 0,
+        isFallen: false,
+        fallCooldown: false,
+        finished: false,
+      },
+      {
+        id: 3,
+        name: 'イチイチイチイチ',
+        image: '/horse3.png',
+        position: 0,
+        isFallen: false,
+        fallCooldown: false,
+        finished: false,
+      },
+      {
+        id: 4,
+        name: 'キラキラキンヨービ',
+        image: '/horse4.png',
+        position: 0,
+        isFallen: false,
+        fallCooldown: false,
+        finished: false,
+      },
+      {
+        id: 5,
+        name: 'ディーモアンター',
+        image: '/horse5.png',
+        position: 0,
+        isFallen: false,
+        fallCooldown: false,
+        finished: false,
+      },
+    ])
 
-const horses = ref<Horse[]>([
-  { id: 1, name: 'ダンゴムシチャウヨ', image: '/horse1.png', position: 0, finished: false },
-  { id: 2, name: 'ウマウマチャハーン', image: '/horse2.png', position: 0, finished: false },
-  { id: 3, name: 'イチイチイチイチ', image: '/horse3.png', position: 0, finished: false },
-  { id: 4, name: 'キラキラキンヨービ', image: '/horse4.png', position: 0, finished: false },
-  { id: 5, name: 'ディーモアンター', image: '/horse5.png', position: 0, finished: false },
-]);
+    const goalPosition = 500
+    const raceInProgress = ref(false)
+    const raceFinished = ref(false)
 
-const startRace = () => {
-  raceInProgress.value = true;
-  raceFinished.value = false;
-  rankings.value = [];
-  horses.value.forEach((horse) => {
-    horse.position = 0;
-    horse.finished = false;
-  });
+    const startRace = () => {
+      raceInProgress.value = true
+      raceFinished.value = false
 
-  const raceInterval = setInterval(() => {
-    let allFinished = true;
+      const raceInterval = setInterval(() => {
+        let allFinished = true
 
-    horses.value = horses.value.map((horse) => {
-      if (horse.finished) return horse; // 既にゴールした馬は動かさない
+        horses.value.forEach((horse) => {
+          if (horse.finished) {
+            return horse
+          }
 
-      let newPosition = horse.position + Math.random() * 10;
-      if (newPosition >= goalPosition) {
-        newPosition = goalPosition; // ⬅️ はみ出さないよう制限
-        horse.finished = true;
-        rankings.value.push(horse); // 順位を記録
-      } else {
-        allFinished = false;
-      }
+          if (horse.isFallen) {
+            allFinished = false
+            return horse
+          }
 
-      return { ...horse, position: newPosition };
-    });
+          if (Math.random() < 0.02) {
+            horse.isFallen = true
+            setTimeout(() => {
+              horse.isFallen = false
+            }, 800)
+            return horse
+          }
 
-    if (allFinished) {
-      clearInterval(raceInterval);
-      raceInProgress.value = false;
-      raceFinished.value = true;
+          let newPosition = horse.position + Math.random() * 10
+          if (newPosition >= goalPosition) {
+            newPosition = goalPosition
+            horse.finished = true
+            rankings.value.push(horse)
+          }
+
+          horse.position = newPosition
+          allFinished = false
+
+          return horse
+        })
+
+        if (allFinished) {
+          clearInterval(raceInterval)
+          raceFinished.value = true
+          raceInProgress.value = false
+        }
+      }, 100)
     }
-  }, 100);
-};
 
-const resetRace = () => {
-  raceFinished.value = false;
-  rankings.value = [];
-  horses.value.forEach((horse) => {
-    horse.position = 0;
-    horse.finished = false;
-  });
-};
+    const resetRace = () => {
+      horses.value.forEach((horse) => {
+        horse.position = 0
+        horse.isFallen = false
+        horse.finished = false
+      })
+      raceFinished.value = false
+      rankings.value = []
+    }
+
+    return {
+      horses,
+      rankings,
+      raceInProgress,
+      raceFinished,
+      startRace,
+      resetRace,
+    }
+  },
+})
 </script>
 
-
 <style scoped>
-.race-container {
-  position: relative;
-  max-width: 1200px;
-  height: 300px;
-  border: 2px solid black;
-  overflow: hidden;
-  background-color: green;
-}
-
 .horse {
-  transition: left 0.1s linear;
+  transition:
+    left 0.3s ease-out,
+    transform 0.1s ease-out;
   width: 60px;
 }
 
 .goal-line {
   position: absolute;
   top: 0%;
-  right: 70px;
+  right: 75px;
   width: 5px;
   height: 100%;
   background-color: white;
 }
 
-/* 結果表示 */
 .result-alert {
   text-align: center;
   font-size: 18px;
