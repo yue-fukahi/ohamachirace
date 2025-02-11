@@ -17,6 +17,7 @@
     <v-main class="bg-green-lighten-3">
       <v-container>
         <v-container class="border rounded-lg bg-green position-relative">
+          <div class="goal-line"></div>
           <v-row v-for="horse in horses" :key="horse.id">
             <v-col cols="2">
               <div class="horse-name">{{ horse.name }}</div>
@@ -30,7 +31,6 @@
               />
             </v-col>
           </v-row>
-          <div class="goal-line"></div>
         </v-container>
       </v-container>
 
@@ -126,13 +126,13 @@ const resetRace = () => {
   width: 60px;
 }
 
-/* ゴールライン */
 .goal-line {
   position: absolute;
-  right: 5%;
+  top: 0%;
+  right: 70px;
   width: 5px;
   height: 100%;
-  background-color: red;
+  background-color: white;
 }
 
 /* 結果表示 */
