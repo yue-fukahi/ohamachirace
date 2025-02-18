@@ -4,10 +4,6 @@
       <v-container class="py-0 fill-height text-h4 text-teal-darken-4">
         OHAMACHIKO Kasakasa Derby
       </v-container>
-
-      <v-btn v-if="!raceFinished" @click="startRace" :disabled="raceInProgress"> Start Race </v-btn>
-
-      <v-btn v-if="raceFinished" @click="resetRace"> Reset Race </v-btn>
     </v-app-bar>
 
     <v-main class="bg-green-lighten-3">
@@ -32,6 +28,11 @@
             </v-col>
           </v-row>
         </v-container>
+      </v-container>
+
+      <v-container class="text-center">
+        <v-btn color="primary" v-if="!raceFinished" @click="startRace" :disabled="raceInProgress"> Start Race </v-btn>
+        <v-btn v-if="raceFinished" @click="resetRace"> Reset Race </v-btn>
       </v-container>
 
       <v-alert v-if="raceFinished" type="success" class="result-alert">
