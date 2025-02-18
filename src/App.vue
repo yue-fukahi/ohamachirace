@@ -44,9 +44,9 @@
           </template>
           <v-card-text>
             <div v-if="rankings.length > 2">
-              <p>🥇 1位: {{ rankings[0].name }}</p>
-              <p>🥈 2位: {{ rankings[1].name }}</p>
-              <p>🥉 3位: {{ rankings[2].name }}</p>
+              <p>🥇 1位: {{ rankings[0].postPosition + 1 }} {{ rankings[0].name }}</p>
+              <p>🥈 2位: {{ rankings[1].postPosition + 1 }} {{ rankings[1].name }}</p>
+              <p>🥉 3位: {{ rankings[2].postPosition + 1 }} {{ rankings[2].name }}</p>
             </div>
             <div v-else>
               <p>レース結果がありません</p>
@@ -78,9 +78,13 @@ interface HorseState {
   finished: boolean
 }
 
+interface Ranking extends Horse {
+  postPosition: number
+}
+
 export default defineComponent({
   setup() {
-    const rankings = ref<Horse[]>([])
+    const rankings = ref<Ranking[]>([])
     const horses: Horse[] = [
       { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png' },
       { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png' },
@@ -133,7 +137,7 @@ export default defineComponent({
           if (newPosition >= goalPosition) {
             newPosition = goalPosition
             state.finished = true
-            rankings.value.push(horses[i])
+            rankings.value.push({ ...horses[i], postPosition: i })
           }
 
           state.position = newPosition
