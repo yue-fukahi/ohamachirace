@@ -194,10 +194,4 @@ const resetRace = () => {
   height: 100%;
   background-color: white;
 }
-
-.result-alert {
-  text-align: center;
-  font-size: 18px;
-  margin-top: 10px;
-}
 </style>
