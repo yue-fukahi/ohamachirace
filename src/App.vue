@@ -14,19 +14,19 @@
       <v-container>
         <v-container class="rounded-lg bg-green position-relative">
           <div class="goal-line"></div>
-          <v-row v-for="status in horseStates" :key="status.id">
+          <v-row v-for="(state, index) in horseStates" :key="state.id">
             <v-col cols="2">
-              <div class="horse-name">{{ horses[status.id].name }}</div>
-              <div>{{ (status.position / 5).toFixed(1) }}%</div>
-              <div>{{ status.isFallen }}</div>
+              <div class="horse-name">{{ index + 1 }} {{ horses[state.id].name }}</div>
+              <div>{{ (state.position / 5).toFixed(1) }}%</div>
+              <div>{{ state.isFallen }}</div>
             </v-col>
             <v-col>
               <v-img
-                :src="horses[status.id].image"
+                :src="horses[state.id].image"
                 class="horse"
                 :style="{
-                  left: `${status.position / 5}%`,
-                  transform: `translateX(-${status.position / 5}%) rotate(${status.isFallen ? '90' : '0'}deg)`,
+                  left: `${state.position / 5}%`,
+                  transform: `translateX(-${state.position / 5}%) rotate(${state.isFallen ? '90' : '0'}deg)`,
                 }"
               />
             </v-col>
