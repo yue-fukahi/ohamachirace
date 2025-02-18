@@ -31,13 +31,32 @@
       </v-container>
 
       <v-container class="text-center">
-        <v-btn color="primary" v-if="!raceFinished" @click="startRace" :disabled="raceInProgress"> Start Race </v-btn>
+        <v-btn color="primary" v-if="!raceFinished" @click="startRace" :disabled="raceInProgress">
+          Start Race
+        </v-btn>
         <v-btn v-if="raceFinished" @click="resetRace"> Reset Race </v-btn>
       </v-container>
 
-      <v-alert v-if="raceFinished" type="success" class="result-alert">
-        🏆 優勝: {{ rankings[0]?.name }} 🎉
-      </v-alert>
+      <v-dialog v-model="dialogVisible" max-width="400px">
+        <v-card>
+          <template v-slot:title>
+            <div class="d-flex justify-center">🏆 レース結果 🏆</div>
+          </template>
+          <v-card-text>
+            <div v-if="rankings.length > 2">
+              <p>🥇 1位: {{ rankings[0].name }}</p>
+              <p>🥈 2位: {{ rankings[1].name }}</p>
+              <p>🥉 3位: {{ rankings[2].name }}</p>
+            </div>
+            <div v-else>
+              <p>レース結果がありません</p>
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" @click="dialogVisible = false">OK</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -82,10 +101,12 @@ export default defineComponent({
     const goalPosition = 500
     const raceInProgress = ref(false)
     const raceFinished = ref(false)
+    const dialogVisible = ref(false)
 
     const startRace = () => {
       raceInProgress.value = true
       raceFinished.value = false
+      dialogVisible.value = false
 
       const raceInterval = setInterval(() => {
         let allFinished = true
@@ -125,6 +146,7 @@ export default defineComponent({
           clearInterval(raceInterval)
           raceFinished.value = true
           raceInProgress.value = false
+          dialogVisible.value = true
         }
       }, 100)
     }
@@ -138,6 +160,7 @@ export default defineComponent({
         horse.fallCooldown = false
       })
       raceFinished.value = false
+      dialogVisible.value = false
       rankings.value = []
     }
 
@@ -147,6 +170,7 @@ export default defineComponent({
       rankings,
       raceInProgress,
       raceFinished,
+      dialogVisible,
       startRace,
       resetRace,
     }
