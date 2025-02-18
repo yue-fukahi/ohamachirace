@@ -10,15 +10,14 @@
       <v-container>
         <v-container class="rounded-lg bg-green position-relative">
           <div class="goal-line"></div>
-          <v-row v-for="(state, index) in horseStates" :key="state.id">
+          <v-row v-for="state in horseStates" :key="state.id">
             <v-col cols="2">
-              <div class="horse-name">{{ index + 1 }} {{ horses[state.id].name }}</div>
+              <div class="horse-name">{{ state.postPosition }} {{ state.name }}</div>
               <div>{{ (state.position / 5).toFixed(1) }}%</div>
-              <div>{{ state.isFallen }}</div>
             </v-col>
             <v-col>
               <v-img
-                :src="horses[state.id].image"
+                :src="state.image"
                 class="horse"
                 :style="{
                   left: `${state.position / 5}%`,
@@ -44,9 +43,9 @@
           </template>
           <v-card-text>
             <div v-if="rankings.length > 2">
-              <p>🥇 1位: {{ rankings[0].postPosition + 1 }} {{ rankings[0].name }}</p>
-              <p>🥈 2位: {{ rankings[1].postPosition + 1 }} {{ rankings[1].name }}</p>
-              <p>🥉 3位: {{ rankings[2].postPosition + 1 }} {{ rankings[2].name }}</p>
+              <p>🥇 1位: {{ rankings[0].postPosition }} {{ rankings[0].name }}</p>
+              <p>🥈 2位: {{ rankings[1].postPosition }} {{ rankings[1].name }}</p>
+              <p>🥉 3位: {{ rankings[2].postPosition }} {{ rankings[2].name }}</p>
             </div>
             <div v-else>
               <p>レース結果がありません</p>
