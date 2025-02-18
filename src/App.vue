@@ -130,6 +130,7 @@ export default defineComponent({
             setTimeout(() => {
               state.isFallen = false
             }, 800)
+            allFinished = false
             return state
           }
 
