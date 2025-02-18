@@ -188,7 +188,7 @@ export default defineComponent({
   transition:
     left 0.3s ease-out,
     transform 0.1s ease-out;
-  width: 60px;
+  width: 50px;
 }
 
 .goal-line {
