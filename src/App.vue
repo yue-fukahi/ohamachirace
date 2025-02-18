@@ -61,8 +61,8 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 
 interface Horse {
   id: number
@@ -70,117 +70,107 @@ interface Horse {
   image: string
 }
 
-interface HorseState {
-  id: number
+interface HorseState extends Horse {
+  postPosition: number
   position: number
   isFallen: boolean
   fallCooldown: boolean
   finished: boolean
 }
 
-interface Ranking extends Horse {
-  postPosition: number
+const horses: Horse[] = [
+  { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png' },
+  { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png' },
+  { id: 2, name: 'ハシレバカロリゼロ', image: '/horse3.png' },
+  { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png' },
+  { id: 4, name: 'ディーモアンター', image: '/horse5.png' },
+]
+const goalPosition = 500
+
+const rankings = ref<HorseState[]>([])
+const horseStates = ref<HorseState[]>([])
+const raceInProgress = ref(false)
+const raceFinished = ref(false)
+const dialogVisible = ref(false)
+
+onMounted(() => {
+  shuffleHorses()
+})
+
+const shuffleHorses = () => {
+  horseStates.value = [...horses]
+    .sort(() => Math.random() - 0.5) // ランダムに並び替え
+    .map((horse, i) => ({
+      ...horse,
+      postPosition: i + 1,
+      position: 0,
+      isFallen: false,
+      fallCooldown: false,
+      finished: false,
+    }))
 }
 
-export default defineComponent({
-  setup() {
-    const rankings = ref<Ranking[]>([])
-    const horses: Horse[] = [
-      { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png' },
-      { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png' },
-      { id: 2, name: 'イチイチイチイチ', image: '/horse3.png' },
-      { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png' },
-      { id: 4, name: 'ディーモアンター', image: '/horse5.png' },
-    ]
-    const horseStates = ref<HorseState[]>(
-      horses.map((horse) => ({
-        id: horse.id,
-        position: 0,
-        isFallen: false,
-        fallCooldown: false,
-        finished: false,
-      })),
-    )
+const startRace = () => {
+  raceInProgress.value = true
+  raceFinished.value = false
+  dialogVisible.value = false
 
-    const goalPosition = 500
-    const raceInProgress = ref(false)
-    const raceFinished = ref(false)
-    const dialogVisible = ref(false)
+  const raceInterval = setInterval(() => {
+    let allFinished = true
 
-    const startRace = () => {
-      raceInProgress.value = true
-      raceFinished.value = false
-      dialogVisible.value = false
+    horseStates.value.forEach((state) => {
+      if (state.finished) {
+        return state
+      }
 
-      const raceInterval = setInterval(() => {
-        let allFinished = true
+      if (state.isFallen) {
+        allFinished = false
+        return state
+      }
 
-        horseStates.value.forEach((state, i) => {
-          if (state.finished) {
-            return state
-          }
+      if (Math.random() < 0.01) {
+        state.isFallen = true
+        setTimeout(() => {
+          state.isFallen = false
+        }, 800)
+        allFinished = false
+        return state
+      }
 
-          if (state.isFallen) {
-            allFinished = false
-            return state
-          }
+      let newPosition = state.position + Math.random() * 7
+      if (newPosition >= goalPosition) {
+        newPosition = goalPosition
+        state.finished = true
+        rankings.value.push(state)
+      }
 
-          if (Math.random() < 0.01) {
-            state.isFallen = true
-            setTimeout(() => {
-              state.isFallen = false
-            }, 800)
-            allFinished = false
-            return state
-          }
+      state.position = newPosition
+      allFinished = false
 
-          let newPosition = state.position + Math.random() * 7
-          if (newPosition >= goalPosition) {
-            newPosition = goalPosition
-            state.finished = true
-            rankings.value.push({ ...horses[i], postPosition: i })
-          }
+      return state
+    })
 
-          state.position = newPosition
-          allFinished = false
-
-          return state
-        })
-
-        if (allFinished) {
-          clearInterval(raceInterval)
-          raceFinished.value = true
-          raceInProgress.value = false
-          dialogVisible.value = true
-        }
-      }, 100)
+    if (allFinished) {
+      clearInterval(raceInterval)
+      raceFinished.value = true
+      raceInProgress.value = false
+      dialogVisible.value = true
     }
+  }, 100)
+}
 
-    const resetRace = () => {
-      horseStates.value.forEach((horse, i) => {
-        id: horse.id = i
-        horse.position = 0
-        horse.isFallen = false
-        horse.finished = false
-        horse.fallCooldown = false
-      })
-      raceFinished.value = false
-      dialogVisible.value = false
-      rankings.value = []
-    }
-
-    return {
-      horses,
-      horseStates,
-      rankings,
-      raceInProgress,
-      raceFinished,
-      dialogVisible,
-      startRace,
-      resetRace,
-    }
-  },
-})
+const resetRace = () => {
+  horseStates.value.forEach((horse, i) => {
+    id: horse.id = i
+    horse.position = 0
+    horse.isFallen = false
+    horse.finished = false
+    horse.fallCooldown = false
+  })
+  raceFinished.value = false
+  dialogVisible.value = false
+  rankings.value = []
+}
 </script>
 
 <style scoped>
