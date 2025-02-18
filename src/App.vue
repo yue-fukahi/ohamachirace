@@ -83,6 +83,11 @@ const horses: Horse[] = [
   { id: 2, name: 'ハシレバカロリゼロ', image: '/horse3.png' },
   { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png' },
   { id: 4, name: 'ディーモアンター', image: '/horse5.png' },
+  { id: 5, name: 'ニテンノート', image: '/horse5.png' },
+  { id: 6, name: 'ダマーレーサンシタ', image: '/horse5.png' },
+  { id: 7, name: 'ゲーミンロッピャク', image: '/horse5.png' },
+  { id: 8, name: 'マイニチオハマチコ', image: '/horse5.png' },
+  { id: 9, name: 'ヤマタノオロチン', image: '/horse5.png' },
 ]
 const goalPosition = 500
 
@@ -98,7 +103,8 @@ onMounted(() => {
 
 const shuffleHorses = () => {
   horseStates.value = [...horses]
-    .sort(() => Math.random() - 0.5) // ランダムに並び替え
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 7)
     .map((horse, i) => ({
       ...horse,
       postPosition: i + 1,
