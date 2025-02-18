@@ -14,19 +14,19 @@
       <v-container>
         <v-container class="rounded-lg bg-green position-relative">
           <div class="goal-line"></div>
-          <v-row v-for="horse in horses" :key="horse.id">
+          <v-row v-for="status in horseStates" :key="status.id">
             <v-col cols="2">
-              <div class="horse-name">{{ horse.name }}</div>
-              <div>{{ (horse.position / 5).toFixed(1) }}%</div>
-              <div>{{ horse.isFallen }}</div>
+              <div class="horse-name">{{ horses[status.id].name }}</div>
+              <div>{{ (status.position / 5).toFixed(1) }}%</div>
+              <div>{{ status.isFallen }}</div>
             </v-col>
             <v-col>
               <v-img
-                :src="horse.image"
+                :src="horses[status.id].image"
                 class="horse"
                 :style="{
-                  left: `${horse.position / 5}%`,
-                  transform: `translateX(-${horse.position / 5}%) rotate(${horse.isFallen ? '90' : '0'}deg)`,
+                  left: `${status.position / 5}%`,
+                  transform: `translateX(-${status.position / 5}%) rotate(${status.isFallen ? '90' : '0'}deg)`,
                 }"
               />
             </v-col>
@@ -48,6 +48,10 @@ interface Horse {
   id: number
   name: string
   image: string
+}
+
+interface HorseState {
+  id: number
   position: number
   isFallen: boolean
   fallCooldown: boolean
@@ -57,53 +61,22 @@ interface Horse {
 export default defineComponent({
   setup() {
     const rankings = ref<Horse[]>([])
-    const horses = ref<Horse[]>([
-      {
-        id: 1,
-        name: 'ダンゴムシチャウヨ',
-        image: '/horse1.png',
+    const horses: Horse[] = [
+      { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png' },
+      { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png' },
+      { id: 2, name: 'イチイチイチイチ', image: '/horse3.png' },
+      { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png' },
+      { id: 4, name: 'ディーモアンター', image: '/horse5.png' },
+    ]
+    const horseStates = ref<HorseState[]>(
+      horses.map((horse) => ({
+        id: horse.id,
         position: 0,
         isFallen: false,
         fallCooldown: false,
         finished: false,
-      },
-      {
-        id: 2,
-        name: 'ウマウマチャハーン',
-        image: '/horse2.png',
-        position: 0,
-        isFallen: false,
-        fallCooldown: false,
-        finished: false,
-      },
-      {
-        id: 3,
-        name: 'イチイチイチイチ',
-        image: '/horse3.png',
-        position: 0,
-        isFallen: false,
-        fallCooldown: false,
-        finished: false,
-      },
-      {
-        id: 4,
-        name: 'キラキラキンヨービ',
-        image: '/horse4.png',
-        position: 0,
-        isFallen: false,
-        fallCooldown: false,
-        finished: false,
-      },
-      {
-        id: 5,
-        name: 'ディーモアンター',
-        image: '/horse5.png',
-        position: 0,
-        isFallen: false,
-        fallCooldown: false,
-        finished: false,
-      },
-    ])
+      })),
+    )
 
     const goalPosition = 500
     const raceInProgress = ref(false)
@@ -116,35 +89,35 @@ export default defineComponent({
       const raceInterval = setInterval(() => {
         let allFinished = true
 
-        horses.value.forEach((horse) => {
-          if (horse.finished) {
-            return horse
+        horseStates.value.forEach((state, i) => {
+          if (state.finished) {
+            return state
           }
 
-          if (horse.isFallen) {
+          if (state.isFallen) {
             allFinished = false
-            return horse
+            return state
           }
 
-          if (Math.random() < 0.02) {
-            horse.isFallen = true
+          if (Math.random() < 0.01) {
+            state.isFallen = true
             setTimeout(() => {
-              horse.isFallen = false
+              state.isFallen = false
             }, 800)
-            return horse
+            return state
           }
 
-          let newPosition = horse.position + Math.random() * 10
+          let newPosition = state.position + Math.random() * 7
           if (newPosition >= goalPosition) {
             newPosition = goalPosition
-            horse.finished = true
-            rankings.value.push(horse)
+            state.finished = true
+            rankings.value.push(horses[i])
           }
 
-          horse.position = newPosition
+          state.position = newPosition
           allFinished = false
 
-          return horse
+          return state
         })
 
         if (allFinished) {
@@ -156,10 +129,12 @@ export default defineComponent({
     }
 
     const resetRace = () => {
-      horses.value.forEach((horse) => {
+      horseStates.value.forEach((horse, i) => {
+        id: horse.id = i
         horse.position = 0
         horse.isFallen = false
         horse.finished = false
+        horse.fallCooldown = false
       })
       raceFinished.value = false
       rankings.value = []
@@ -167,6 +142,7 @@ export default defineComponent({
 
     return {
       horses,
+      horseStates,
       rankings,
       raceInProgress,
       raceFinished,
