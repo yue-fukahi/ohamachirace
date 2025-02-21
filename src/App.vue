@@ -189,7 +189,7 @@ const resetRace = () => {
 .goal-line {
   position: absolute;
   top: 0%;
-  right: 75px;
+  right: 60px;
   width: 5px;
   height: 100%;
   background-color: white;
