@@ -13,7 +13,7 @@
           <v-row v-for="state in horseStates" :key="state.id">
             <v-col cols="2">
               <div class="horse-name">{{ state.postPosition }} {{ state.name }}</div>
-              <div>{{ (positionRate(state)).toFixed(1) }}%</div>
+              <div>{{ positionRate(state).toFixed(1) }}%</div>
               <div>運値: {{ getLuckStars(state.luck) }}</div>
             </v-col>
             <v-col>
@@ -131,7 +131,7 @@ onMounted(() => {
   shuffleHorses()
 })
 
-const positionRate = (state: HorseState) => state.position / speedWeight;
+const positionRate = (state: HorseState) => state.position / speedWeight
 
 const shuffleHorses = () => {
   horseStates.value = [...horses]
@@ -173,14 +173,18 @@ const startRace = () => {
         return state
       }
 
-      if (Math.random() < fallChances[state.luck]) {
+      const ending = positionRate(state) > 90
+      const doFall = !ending && Math.random() < fallChances[state.luck]
+      const progress = !ending ? Math.random() * state.speed : 0.5 * 7
+
+      if (doFall) {
         state.isFallen = true
         setTimeout(() => {
           state.isFallen = false
         }, 8 * updateWeight)
       }
 
-      let newPosition = state.position + Math.random() * state.speed
+      let newPosition = state.position + progress
       if (newPosition >= goalPosition) {
         newPosition = goalPosition
         state.finished = true
