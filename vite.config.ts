@@ -8,6 +8,7 @@ import vuetify from 'vite-plugin-vuetify'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/ohamachirace/',
   plugins: [vue(), vueJsx(), vueDevTools(), vuetify({ autoImport: true })],
   resolve: {
     alias: {
