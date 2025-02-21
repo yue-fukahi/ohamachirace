@@ -107,16 +107,16 @@ interface HorseState extends Horse {
 
 // prettier-ignore
 const horses: Horse[] = [
-  { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png', luck: Luck.NORMAL, speed: 7.0 },
-  { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png', luck: Luck.GOOD, speed: 6.9 },
-  { id: 2, name: 'ハシレバカロリゼロ', image: '/horse3.png', luck: Luck.NORMAL, speed: 7.0 },
-  { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png', luck: Luck.VERY_GOOD, speed: 6.6 },
-  { id: 4, name: 'ディーモアンター', image: '/horse5.png', luck: Luck.NORMAL, speed: 7.0 },
-  { id: 5, name: 'ニテンノート', image: '/horse5.png', luck: Luck.BAD, speed: 7.1 },
-  { id: 6, name: 'ダマーレーサンシタ', image: '/horse5.png', luck: Luck.BAD, speed: 7.1 },
-  { id: 7, name: 'ゲーミンロッピャク', image: '/horse5.png', luck: Luck.VERY_BAD, speed: 8.0 },
-  { id: 8, name: 'マイニチオハマチコ', image: '/horse5.png', luck: Luck.NORMAL, speed: 7.0 },
-  { id: 9, name: 'ヤマタノオロチン', image: '/horse5.png', luck: Luck.GOOD, speed: 6.9 },
+  { id: 0, name: 'ダンゴムシチャウヨ', image: `${import.meta.env.BASE_URL}/horse1.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 1, name: 'ウマウマチャハーン', image: `${import.meta.env.BASE_URL}/horse2.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 2, name: 'ハシレバカロリゼロ', image: `${import.meta.env.BASE_URL}/horse3.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 3, name: 'キラキラキンヨービ', image: `${import.meta.env.BASE_URL}/horse4.png`, luck: Luck.VERY_GOOD, speed: 6.6 },
+  { id: 4, name: 'ディーモアンター', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 5, name: 'ニテンノート', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.BAD, speed: 7.1 },
+  { id: 6, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.BAD, speed: 7.1 },
+  { id: 7, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.VERY_BAD, speed: 8.0 },
+  { id: 8, name: 'マイニチオハマチコ', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 9, name: 'ヤマタノオロチン', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.GOOD, speed: 6.9 },
 ]
 
 const updateWeight = 100
@@ -137,8 +137,8 @@ const positionRate = (state: HorseState) => state.position / speedWeight
 
 const shuffleHorses = () => {
   horseStates.value = [...horses]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 7)
+    // .sort(() => Math.random() - 0.5)
+    // .slice(0, 7)
     .map((horse, i) => ({
       ...horse,
       postPosition: i + 1,
