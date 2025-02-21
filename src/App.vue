@@ -13,7 +13,6 @@
           <v-row v-for="state in horseStates" :key="state.id">
             <v-col cols="2">
               <div class="horse-name">{{ state.postPosition }} {{ state.name }}</div>
-              <div>{{ positionRate(state).toFixed(1) }}%</div>
               <div>運値: {{ getLuckStars(state.luck) }}</div>
             </v-col>
             <v-col>
@@ -33,6 +32,9 @@
       <v-container class="text-center">
         <v-btn color="primary" v-if="!raceFinished" @click="startRace" :disabled="raceInProgress">
           Start Race
+        </v-btn>
+        <v-btn v-if="!raceFinished" @click="shuffleHorses" :disabled="raceInProgress">
+          Shuffle
         </v-btn>
         <v-btn v-if="raceFinished" @click="resetRace"> Reset Race </v-btn>
       </v-container>
