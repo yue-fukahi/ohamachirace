@@ -13,7 +13,6 @@
           <v-row v-for="state in horseStates" :key="state.id">
             <v-col cols="2">
               <div class="horse-name">{{ state.postPosition }} {{ state.name }}</div>
-              <!-- <div>{{ (state.position / 5).toFixed(1) }}%</div> -->
               <div>運値: {{ getLuckStars(state.luck) }}</div>
             </v-col>
             <v-col>
@@ -92,6 +91,7 @@ interface Horse {
   name: string
   image: string
   luck: Luck
+  speed: number
 }
 
 interface HorseState extends Horse {
@@ -104,17 +104,19 @@ interface HorseState extends Horse {
 
 // prettier-ignore
 const horses: Horse[] = [
-  { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png', luck: Luck.NORMAL },
-  { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png', luck: Luck.GOOD },
-  { id: 2, name: 'ハシレバカロリゼロ', image: '/horse3.png', luck: Luck.NORMAL },
-  { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png', luck: Luck.VERY_GOOD },
-  { id: 4, name: 'ディーモアンター', image: '/horse5.png', luck: Luck.NORMAL },
-  { id: 5, name: 'ニテンノート', image: '/horse5.png', luck: Luck.BAD },
-  { id: 6, name: 'ダマーレーサンシタ', image: '/horse5.png', luck: Luck.BAD },
-  { id: 7, name: 'ゲーミンロッピャク', image: '/horse5.png', luck: Luck.VERY_BAD },
-  { id: 8, name: 'マイニチオハマチコ', image: '/horse5.png', luck: Luck.NORMAL },
-  { id: 9, name: 'ヤマタノオロチン', image: '/horse5.png', luck: Luck.GOOD },
+  { id: 0, name: 'ダンゴムシチャウヨ', image: '/horse1.png', luck: Luck.NORMAL, speed: 7.0 },
+  { id: 1, name: 'ウマウマチャハーン', image: '/horse2.png', luck: Luck.GOOD, speed: 6.9 },
+  { id: 2, name: 'ハシレバカロリゼロ', image: '/horse3.png', luck: Luck.NORMAL, speed: 7.0 },
+  { id: 3, name: 'キラキラキンヨービ', image: '/horse4.png', luck: Luck.VERY_GOOD, speed: 6.6 },
+  { id: 4, name: 'ディーモアンター', image: '/horse5.png', luck: Luck.NORMAL, speed: 7.0 },
+  { id: 5, name: 'ニテンノート', image: '/horse5.png', luck: Luck.BAD, speed: 7.1 },
+  { id: 6, name: 'ダマーレーサンシタ', image: '/horse5.png', luck: Luck.BAD, speed: 7.1 },
+  { id: 7, name: 'ゲーミンロッピャク', image: '/horse5.png', luck: Luck.VERY_BAD, speed: 8.0 },
+  { id: 8, name: 'マイニチオハマチコ', image: '/horse5.png', luck: Luck.NORMAL, speed: 7.0 },
+  { id: 9, name: 'ヤマタノオロチン', image: '/horse5.png', luck: Luck.GOOD, speed: 6.9 },
 ]
+
+const gameWeight = 100
 const goalPosition = 500
 
 const rankings = ref<HorseState[]>([])
@@ -142,7 +144,7 @@ const shuffleHorses = () => {
 }
 
 const fallChances: Record<Luck, number> = {
-  [Luck.VERY_BAD]: 0.03,
+  [Luck.VERY_BAD]: 0.05,
   [Luck.BAD]: 0.025,
   [Luck.NORMAL]: 0.02,
   [Luck.GOOD]: 0.015,
@@ -171,12 +173,10 @@ const startRace = () => {
         state.isFallen = true
         setTimeout(() => {
           state.isFallen = false
-        }, 800)
-        allFinished = false
-        return state
+        }, 8 * gameWeight)
       }
 
-      let newPosition = state.position + Math.random() * 7
+      let newPosition = state.position + Math.random() * state.speed
       if (newPosition >= goalPosition) {
         newPosition = goalPosition
         state.finished = true
@@ -195,7 +195,7 @@ const startRace = () => {
       raceInProgress.value = false
       dialogVisible.value = true
     }
-  }, 100)
+  }, 1 * gameWeight)
 }
 
 const resetRace = () => {
