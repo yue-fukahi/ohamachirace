@@ -13,6 +13,7 @@
           <v-row v-for="state in horseStates" :key="state.id">
             <v-col cols="2">
               <div class="horse-name">{{ state.postPosition }} {{ state.name }}</div>
+              <div>{{ (positionRate(state)).toFixed(1) }}%</div>
               <div>運値: {{ getLuckStars(state.luck) }}</div>
             </v-col>
             <v-col>
@@ -20,8 +21,8 @@
                 :src="state.image"
                 class="horse"
                 :style="{
-                  left: `${state.position / 5}%`,
-                  transform: `translateX(-${state.position / 5}%) rotate(${state.isFallen ? '90' : '0'}deg)`,
+                  left: `${positionRate(state)}%`,
+                  transform: `translateX(-${positionRate(state)}%) rotate(${state.isFallen ? '90' : '0'}deg)`,
                 }"
               />
             </v-col>
@@ -116,8 +117,9 @@ const horses: Horse[] = [
   { id: 9, name: 'ヤマタノオロチン', image: '/horse5.png', luck: Luck.GOOD, speed: 6.9 },
 ]
 
-const gameWeight = 100
-const goalPosition = 500
+const updateWeight = 100
+const speedWeight = 6
+const goalPosition = speedWeight * 100
 
 const rankings = ref<HorseState[]>([])
 const horseStates = ref<HorseState[]>([])
@@ -128,6 +130,8 @@ const dialogVisible = ref(false)
 onMounted(() => {
   shuffleHorses()
 })
+
+const positionRate = (state: HorseState) => state.position / speedWeight;
 
 const shuffleHorses = () => {
   horseStates.value = [...horses]
@@ -173,7 +177,7 @@ const startRace = () => {
         state.isFallen = true
         setTimeout(() => {
           state.isFallen = false
-        }, 8 * gameWeight)
+        }, 8 * updateWeight)
       }
 
       let newPosition = state.position + Math.random() * state.speed
@@ -195,7 +199,7 @@ const startRace = () => {
       raceInProgress.value = false
       dialogVisible.value = true
     }
-  }, 1 * gameWeight)
+  }, 1 * updateWeight)
 }
 
 const resetRace = () => {
