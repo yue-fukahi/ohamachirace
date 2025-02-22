@@ -19,5 +19,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
+    host: 'localhost',
+    cors: false,
   },
 })
