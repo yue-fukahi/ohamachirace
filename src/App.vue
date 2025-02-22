@@ -140,8 +140,8 @@ const positionRate = (state: HorseState) => state.position / speedWeight
 
 const shuffleHorses = () => {
   horseStates.value = [...horses]
-    // .sort(() => Math.random() - 0.5)
-    // .slice(0, 7)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 7)
     .map((horse, i) => ({
       ...horse,
       postPosition: i + 1,
