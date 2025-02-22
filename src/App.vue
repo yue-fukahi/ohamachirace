@@ -107,16 +107,19 @@ interface HorseState extends Horse {
 
 // prettier-ignore
 const horses: Horse[] = [
-  { id: 0, name: 'ダンゴムシチャウヨ', image: `${import.meta.env.BASE_URL}/horse1.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 1, name: 'ウマウマチャハーン', image: `${import.meta.env.BASE_URL}/horse2.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 2, name: 'ハシレバカロリゼロ', image: `${import.meta.env.BASE_URL}/horse3.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 3, name: 'キラキラキンヨービ', image: `${import.meta.env.BASE_URL}/horse4.png`, luck: Luck.VERY_GOOD, speed: 6.6 },
-  { id: 4, name: 'ディーモアンター', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 5, name: 'ニテンノート', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 6, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 7, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.VERY_BAD, speed: 8.0 },
-  { id: 8, name: 'マイニチオハマチコ', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 9, name: 'ヤマタノオロチン', image: `${import.meta.env.BASE_URL}/horse5.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 1, name: 'マイニチオハマチコ', image: `${import.meta.env.BASE_URL}/horse01.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 2, name: 'ダンゴムシチャウヨ', image: `${import.meta.env.BASE_URL}/horse02.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 3, name: 'ディーモアンター', image: `${import.meta.env.BASE_URL}/horse03.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 4, name: 'ハシレバカロリゼロ', image: `${import.meta.env.BASE_URL}/horse04.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 5, name: 'タマヤーチャンス', image: `${import.meta.env.BASE_URL}/horse05.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 6, name: 'イノチノミズ', image: `${import.meta.env.BASE_URL}/horse06.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 7, name: 'ウマウマチャハーン', image: `${import.meta.env.BASE_URL}/horse07.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 8, name: 'ヤマタノオロチン', image: `${import.meta.env.BASE_URL}/horse08.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 9, name: 'コノヨーニネ', image: `${import.meta.env.BASE_URL}/horse09.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 10, name: 'キラキラキンヨービ', image: `${import.meta.env.BASE_URL}/horse10.png`, luck: Luck.VERY_GOOD, speed: 6.6 },
+  { id: 11, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse11.png`, luck: Luck.BAD, speed: 7.1 },
+  { id: 12, name: 'メイク・デ・ブー', image: `${import.meta.env.BASE_URL}/horse12.png`, luck: Luck.BAD, speed: 7.1 },
+  { id: 13, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse13.png`, luck: Luck.VERY_BAD, speed: 8.0 },
 ]
 
 const updateWeight = 100
