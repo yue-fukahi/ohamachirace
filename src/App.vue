@@ -120,6 +120,9 @@ const horses: Horse[] = [
   { id: 11, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse11.png`, luck: Luck.BAD, speed: 7.1 },
   { id: 12, name: 'メイク・デ・ブー', image: `${import.meta.env.BASE_URL}/horse12.png`, luck: Luck.BAD, speed: 7.1 },
   { id: 13, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse13.png`, luck: Luck.VERY_BAD, speed: 8.0 },
+  { id: 14, name: 'チェレン・コフコ', image: `${import.meta.env.BASE_URL}/horse14.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 15, name: 'マチコムシノバシ', image: `${import.meta.env.BASE_URL}/horse15.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 16, name: 'シッキンブラック', image: `${import.meta.env.BASE_URL}/horse16.png`, luck: Luck.BAD, speed: 7.1 },
 ]
 
 const updateWeight = 100
