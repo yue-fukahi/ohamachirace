@@ -122,7 +122,14 @@ const horses: Horse[] = [
   { id: 13, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse13.png`, luck: Luck.VERY_BAD, speed: 8.0 },
   { id: 14, name: 'チェレン・コフコ', image: `${import.meta.env.BASE_URL}/horse14.png`, luck: Luck.NORMAL, speed: 7.0 },
   { id: 15, name: 'マチコムシノバシ', image: `${import.meta.env.BASE_URL}/horse15.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 16, name: 'シッキンブラック', image: `${import.meta.env.BASE_URL}/horse16.png`, luck: Luck.BAD, speed: 7.1 },
+  { id: 16, name: 'シッキンレッド', image: `${import.meta.env.BASE_URL}/horse16.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 17, name: 'カキンブラック', image: `${import.meta.env.BASE_URL}/horse17.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 18, name: 'コーケンブルー', image: `${import.meta.env.BASE_URL}/horse18.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 19, name: 'モーシンイエロー', image: `${import.meta.env.BASE_URL}/horse19.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 20, name: 'バクチピンク', image: `${import.meta.env.BASE_URL}/horse20.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 21, name: 'マチコジルゴクゴク', image: `${import.meta.env.BASE_URL}/horse21.png`, luck: Luck.GOOD, speed: 6.9 },
+  { id: 22, name: 'ナニシテール・モー', image: `${import.meta.env.BASE_URL}/horse22.png`, luck: Luck.VERY_BAD, speed: 8.0 },
+  { id: 23, name: 'ヒダルマーチ', image: `${import.meta.env.BASE_URL}/horse23.png`, luck: Luck.BAD, speed: 7.1 },
 ]
 
 const updateWeight = 100
