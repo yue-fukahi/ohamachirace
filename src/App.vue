@@ -173,11 +173,11 @@ const fallChances: Record<Luck, number> = {
 }
 
 const speed: Record<Luck, number> = {
-  [Luck.VERY_BAD]: 6.6,
-  [Luck.BAD]: 6.9,
+  [Luck.VERY_BAD]: 8.0,
+  [Luck.BAD]: 7.1,
   [Luck.NORMAL]: 7.0,
-  [Luck.GOOD]: 7.1,
-  [Luck.VERY_GOOD]: 8.0,
+  [Luck.GOOD]: 6.9,
+  [Luck.VERY_GOOD]: 6.6,
 }
 
 const startRace = () => {
