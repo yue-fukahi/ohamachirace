@@ -74,7 +74,7 @@ enum Luck {
   VERY_GOOD = 5,
 }
 
-const getLuckStars = (luck: Luck) => {
+const getLuckStars = (luck: Luck): string => {
   switch (luck) {
     case Luck.VERY_GOOD:
       return '👼'
@@ -94,7 +94,6 @@ interface Horse {
   name: string
   image: string
   luck: Luck
-  speed: number
 }
 
 interface HorseState extends Horse {
@@ -107,32 +106,32 @@ interface HorseState extends Horse {
 
 // prettier-ignore
 const horses: Horse[] = [
-  { id: 1, name: 'マイニチオハマチコ', image: `${import.meta.env.BASE_URL}/horse01.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 2, name: 'ダンゴムシチャウヨ', image: `${import.meta.env.BASE_URL}/horse02.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 3, name: 'ディーモアンター', image: `${import.meta.env.BASE_URL}/horse03.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 4, name: 'ハシレバカロリゼロ', image: `${import.meta.env.BASE_URL}/horse04.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 5, name: 'タマヤーチャンス', image: `${import.meta.env.BASE_URL}/horse05.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 6, name: 'イノチノミズ', image: `${import.meta.env.BASE_URL}/horse06.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 7, name: 'ウマウマチャハーン', image: `${import.meta.env.BASE_URL}/horse07.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 8, name: 'ヤマタノオロチン', image: `${import.meta.env.BASE_URL}/horse08.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 9, name: 'コノヨーニネ', image: `${import.meta.env.BASE_URL}/horse09.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 10, name: 'キラキラキンヨービ', image: `${import.meta.env.BASE_URL}/horse10.png`, luck: Luck.VERY_GOOD, speed: 6.6 },
-  { id: 11, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse11.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 12, name: 'メイク・デ・ブー', image: `${import.meta.env.BASE_URL}/horse12.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 13, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse13.png`, luck: Luck.VERY_BAD, speed: 8.0 },
-  { id: 14, name: 'チェレン・コフコ', image: `${import.meta.env.BASE_URL}/horse14.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 15, name: 'マチコムシノバシ', image: `${import.meta.env.BASE_URL}/horse15.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 16, name: 'シッキンレッド', image: `${import.meta.env.BASE_URL}/horse16.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 17, name: 'カキンブラック', image: `${import.meta.env.BASE_URL}/horse17.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 18, name: 'コーケンブルー', image: `${import.meta.env.BASE_URL}/horse18.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 19, name: 'モーシンイエロー', image: `${import.meta.env.BASE_URL}/horse19.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 20, name: 'バクチピンク', image: `${import.meta.env.BASE_URL}/horse20.png`, luck: Luck.NORMAL, speed: 7.0 },
-  { id: 21, name: 'マチコジルゴクゴク', image: `${import.meta.env.BASE_URL}/horse21.png`, luck: Luck.GOOD, speed: 6.9 },
-  { id: 22, name: 'ナニシテール・モー', image: `${import.meta.env.BASE_URL}/horse22.png`, luck: Luck.VERY_BAD, speed: 8.0 },
-  { id: 23, name: 'ヒダルマーチ', image: `${import.meta.env.BASE_URL}/horse23.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 24, name: 'ハッピーポリープ', image: `${import.meta.env.BASE_URL}/horse24.png`, luck: Luck.VERY_GOOD, speed: 6.6 },
-  { id: 25, name: 'アサオキレーヌ', image: `${import.meta.env.BASE_URL}/horse25.png`, luck: Luck.BAD, speed: 7.1 },
-  { id: 26, name: 'インシーシューカイ', image: `${import.meta.env.BASE_URL}/horse26.png`, luck: Luck.NORMAL, speed: 7.0 },
+  { id: 1, name: 'マイニチオハマチコ', image: `${import.meta.env.BASE_URL}/horse01.png`, luck: Luck.NORMAL },
+  { id: 2, name: 'ダンゴムシチャウヨ', image: `${import.meta.env.BASE_URL}/horse02.png`, luck: Luck.NORMAL },
+  { id: 3, name: 'ディーモアンター', image: `${import.meta.env.BASE_URL}/horse03.png`, luck: Luck.NORMAL },
+  { id: 4, name: 'ハシレバカロリゼロ', image: `${import.meta.env.BASE_URL}/horse04.png`, luck: Luck.NORMAL },
+  { id: 5, name: 'タマヤーチャンス', image: `${import.meta.env.BASE_URL}/horse05.png`, luck: Luck.NORMAL },
+  { id: 6, name: 'イノチノミズ', image: `${import.meta.env.BASE_URL}/horse06.png`, luck: Luck.NORMAL },
+  { id: 7, name: 'ウマウマチャハーン', image: `${import.meta.env.BASE_URL}/horse07.png`, luck: Luck.NORMAL },
+  { id: 8, name: 'ヤマタノオロチン', image: `${import.meta.env.BASE_URL}/horse08.png`, luck: Luck.GOOD },
+  { id: 9, name: 'コノヨーニネ', image: `${import.meta.env.BASE_URL}/horse09.png`, luck: Luck.GOOD },
+  { id: 10, name: 'キラキラキンヨービ', image: `${import.meta.env.BASE_URL}/horse10.png`, luck: Luck.VERY_GOOD },
+  { id: 11, name: 'ダマーレーサンシタ', image: `${import.meta.env.BASE_URL}/horse11.png`, luck: Luck.BAD },
+  { id: 12, name: 'メイク・デ・ブー', image: `${import.meta.env.BASE_URL}/horse12.png`, luck: Luck.BAD },
+  { id: 13, name: 'ゲーミンロッピャク', image: `${import.meta.env.BASE_URL}/horse13.png`, luck: Luck.VERY_BAD },
+  { id: 14, name: 'チェレン・コフコ', image: `${import.meta.env.BASE_URL}/horse14.png`, luck: Luck.NORMAL },
+  { id: 15, name: 'マチコムシノバシ', image: `${import.meta.env.BASE_URL}/horse15.png`, luck: Luck.GOOD },
+  { id: 16, name: 'シッキンレッド', image: `${import.meta.env.BASE_URL}/horse16.png`, luck: Luck.NORMAL },
+  { id: 17, name: 'カキンブラック', image: `${import.meta.env.BASE_URL}/horse17.png`, luck: Luck.NORMAL },
+  { id: 18, name: 'コーケンブルー', image: `${import.meta.env.BASE_URL}/horse18.png`, luck: Luck.NORMAL },
+  { id: 19, name: 'モーシンイエロー', image: `${import.meta.env.BASE_URL}/horse19.png`, luck: Luck.NORMAL },
+  { id: 20, name: 'バクチピンク', image: `${import.meta.env.BASE_URL}/horse20.png`, luck: Luck.NORMAL },
+  { id: 21, name: 'マチコジルゴクゴク', image: `${import.meta.env.BASE_URL}/horse21.png`, luck: Luck.GOOD },
+  { id: 22, name: 'ナニシテール・モー', image: `${import.meta.env.BASE_URL}/horse22.png`, luck: Luck.VERY_BAD },
+  { id: 23, name: 'ヒダルマーチ', image: `${import.meta.env.BASE_URL}/horse23.png`, luck: Luck.BAD },
+  { id: 24, name: 'ハッピーポリープ', image: `${import.meta.env.BASE_URL}/horse24.png`, luck: Luck.VERY_GOOD },
+  { id: 25, name: 'アサオキレーヌ', image: `${import.meta.env.BASE_URL}/horse25.png`, luck: Luck.BAD },
+  { id: 26, name: 'インシーシューカイ', image: `${import.meta.env.BASE_URL}/horse26.png`, luck: Luck.NORMAL },
 ]
 
 const updateWeight = 100
@@ -173,6 +172,14 @@ const fallChances: Record<Luck, number> = {
   [Luck.VERY_GOOD]: 0,
 }
 
+const speed: Record<Luck, number> = {
+  [Luck.VERY_BAD]: 6.6,
+  [Luck.BAD]: 6.9,
+  [Luck.NORMAL]: 7.0,
+  [Luck.GOOD]: 7.1,
+  [Luck.VERY_GOOD]: 8.0,
+}
+
 const startRace = () => {
   raceInProgress.value = true
   raceFinished.value = false
@@ -193,7 +200,7 @@ const startRace = () => {
 
       const ending = positionRate(state) > 90
       const doFall = !ending && Math.random() < fallChances[state.luck]
-      const progress = !ending ? Math.random() * state.speed : 0.5 * 7
+      const progress = !ending ? Math.random() * speed[state.luck] : 0.5 * 7
 
       if (doFall) {
         state.isFallen = true
